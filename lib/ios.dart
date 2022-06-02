@@ -35,7 +35,6 @@ Future<void> changeBundleIdInPbxproj(String bundleId) async {
     String line = lines[x];
     if (line.contains('PRODUCT_BUNDLE_IDENTIFIER')) {
       lines[x] = '				PRODUCT_BUNDLE_IDENTIFIER = $bundleId;';
-      break;
     }
   }
   pbxprojFile.writeAsString(lines.join('\n'));
