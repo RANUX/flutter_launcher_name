@@ -39,7 +39,7 @@ exec(List<String> arguments) {
   final bundleId = config['bundleId'];
   if (bundleId != null) {
     print('Change bundleId to $bundleId');
-    AndroidRenameSteps(arguments[0]).process();
+    AndroidRenameSteps(bundleId).process();
     ios.changeBundleIdInPbxproj(bundleId);
   }
 
