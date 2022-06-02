@@ -25,3 +25,24 @@ Future<void> overwriteInfoPlist(String name) async {
   }
   iOSInfoPlistFile.writeAsString(lines.join('\n'));
 }
+
+// Replace bundleId with new bundleId in project.pbxproj
+Future<void> changeBundleIdInPbxproj(String bundleId) async {
+  final File pbxprojFile = File(constants.iOSProjectPbxprojFile);
+  final List<String> lines = await pbxprojFile.readAsLines();
+
+  bool requireChange = false;
+  for (int x = 0; x < lines.length; x++) {
+    String line = lines[x];
+    if (line.contains('PRODUCT_BUNDLE_IDENTIFIER')) {
+      requireChange = true;
+      continue;
+    }
+
+    if (requireChange) {
+      lines[x] = '				PRODUCT_BUNDLE_IDENTIFIER = $bundleId;';
+      requireChange = false;
+    }
+    pbxprojFile.writeAsString(lines.join('\n'));
+  }
+}
